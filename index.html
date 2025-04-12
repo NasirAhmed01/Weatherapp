@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+   body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f8ff;
+  background-image: url('https://blog.aweber.com/wp-content/uploads/2023/05/content-8776-summer-gifs_blog-600x300-4.gif');
+  background-repeat: no-repeat;      
+  background-size: cover;             
+  background-position: center;       
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 3em;
+  color: #ffffff;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  animation: float 3s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+
+    #city {
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 50px;
+      border: 1px solid #615e5e;
+      background-color: rgba(255, 255, 255, 0.8);
+      width:20rem;
+      font-size: 16px;
+    }
+
+    #checkBtn {
+      padding: 10px 20px;
+      background-color: #bbe4fb;
+      background-color: #7ec9f1;
+      color: white;
+      border:3px solid rgb(0, 162, 255);
+      border-radius: 50px;
+      cursor: pointer;
+      width: 10rem;
+      font-size: 16px;
+    }
+
+    #checkBtn:hover {
+        background-color: #bbe4fb;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather App</h1>
+  <input id="city" placeholder="Enter city name" />
+  <button id="checkBtn">Check</button>
+  <p id="result"></p>
+
+  <script>
+    const apiKey = 'fcf1a7c0ec02e54c2e4406c3ebfa15c6';
+    document.getElementById("checkBtn").addEventListener("click", getWeather);
+    async function getWeather() {
+      const city = document.getElementById("city").value;
+      const result = document.getElementById("result");
+      try {
+        const get = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        const data = await get.json();
+        const temp = data.main.temp;
+        console.log(temp)
+        result.innerText = `🌡️ ${city}: ${temp}°C`;
+      } catch (error) {
+        console.log(error)
+        result.innerText = "❌ Error: City not found!";
+      }
+    }
+  </script>
+</body>
+</html>
